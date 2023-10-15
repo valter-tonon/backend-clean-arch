@@ -1,0 +1,1 @@
+{"version":1,"defects":[],"times":{"Unit\\Domain\\Entity\\Category\\CategoryUnitTest::testAttributes":0.003,"Unit\\Domain\\Entity\\Category\\CategoryUnitTest::testIsActivated":0,"Unit\\TesteUnitTest::testFoo":0,"Unit\\Domain\\Entity\\Category\\CategoryUnitTest::testDisable":0}}
