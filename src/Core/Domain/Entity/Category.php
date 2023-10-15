@@ -4,20 +4,23 @@ namespace Core\Domain\Entity;
 
 use Core\Domain\Entity\Traits\MagicMethodsTrait;
 use Core\Domain\Exception\EntityValidationException;
+use Core\Domain\Validation\DomainValidation;
+use Core\Domain\ValueObject\Uuid;
 
 class Category
 {
     use MagicMethodsTrait;
 public function __construct(
-        protected ?string       $id = '',
+        protected Uuid|string $id = '',
         protected string     $name = '',
         protected string     $description = '',
         protected bool       $isActive = true,
-        protected ?\DateTime $created_at = null,
-        protected ?\DateTime $updated_at = null
+        protected ?\DateTime $createdAt = null,
+        protected ?\DateTime $updatedAt = null
     ) {
-        $this->created_at = $created_at ?? new \DateTime();
-        $this->updated_at = $updated_at ?? new \DateTime();
+        $this->id = $this->id ? new Uuid($this->id): Uuid::random();
+        $this->createdAt = $this->createdAt ?: new \DateTime();
+        $this->updatedAt = $updatedAt ?? new \DateTime();
         $this->validate();
     }
 
@@ -40,21 +43,16 @@ public function __construct(
     {
         $this->name = $name;
         $this->description = $description ?: $this->description;
-        $this->updated_at = new \DateTime();
+        $this->updatedAt = new \DateTime();
         $this->validate();
     }
 
     protected function validate(): void
     {
-        if (empty($this->name)) {
-            throw new EntityValidationException('Name is required');
-        }
-        if (strlen($this->name) < 3) {
-            throw new EntityValidationException('Name must be at least 3 characters');
-        }
-        if (!empty($this->description) && (strlen($this->description) > 255 || strlen($this->description) < 3)) {
-            throw new EntityValidationException('Description must be at least 3 characters and at most 255 characters');
-        }
-
+        DomainValidation::notNull($this->name, 'Name is required');
+        DomainValidation::minLength($this->name, 3, 'Name must be at least 3 characters');
+        DomainValidation::maxLength($this->name, 255, 'Name must be at most 255 characters');
+        DomainValidation::strCanNullAndAndMaxLenght($this->description, 255, 'Description must be at most 255 characters');
+        DomainValidation::strCanNullAndAndMinLenght($this->description, 3, 'Description must be at least 3 characters');
     }
 }

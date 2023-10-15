@@ -4,7 +4,8 @@ namespace Unit\Domain\Entity\Category;
 
 use Core\Domain\Entity\Category;
 use Core\Domain\Exception\EntityValidationException;
-use PHPUnit\Framework\TestCase;
+use Core\Domain\ValueObject\Uuid;
+use Tests\TestCase;
 
 class CategoryUnitTest extends TestCase
 {
@@ -15,7 +16,7 @@ class CategoryUnitTest extends TestCase
             description: 'Category Description',
             isActive: true
         );
-        $attributes = ['id', 'name', 'description', 'isActive','created_at', 'updated_at'];
+        $attributes = ['id', 'name', 'description', 'isActive','createdAt', 'updatedAt'];
         $classAttributes = array_keys($category->toArray());
         $this->assertEquals($attributes, $classAttributes);
         $this->assertEquals('Category Name', $category->name);
@@ -52,7 +53,7 @@ class CategoryUnitTest extends TestCase
 
     public function testUpdate()
     {
-        $uuid = '123456789';
+        $uuid = Uuid::random();
         $category = new Category(
             id: $uuid,
             name: 'Category Name',
@@ -116,7 +117,7 @@ class CategoryUnitTest extends TestCase
         );
 
         $this->expectException(EntityValidationException::class);
-        $this->expectExceptionMessage('Description must be at least 3 characters and at most 255 characters');
+        $this->expectExceptionMessage('Description must be at least 3 characters');
         $category->update(
             name: 'Category Name',
             description: 'De'
