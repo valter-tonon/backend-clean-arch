@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\UseCase;
+namespace Unit\UseCase\Category;
 
 use AllowDynamicProperties;
 use Core\Domain\Entity\Category as CategoryEntity;
@@ -13,7 +13,7 @@ use Ramsey\Uuid\Uuid;
 use stdClass;
 use Tests\TestCase;
 
-#[AllowDynamicProperties] class ListCategoriesUseCaseUnitTest extends TestCase
+#[AllowDynamicProperties] class ListCategoryUseCaseUnitTest extends TestCase
 {
     public function testGetById()
     {

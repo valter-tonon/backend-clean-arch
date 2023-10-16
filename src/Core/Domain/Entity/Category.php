@@ -39,7 +39,7 @@ public function __construct(
         return get_object_vars($this);
     }
 
-    public function update(string $name, string $description=''): void
+    public function update(string $name, ?string $description): void
     {
         $this->name = $name;
         $this->description = $description ?: $this->description;

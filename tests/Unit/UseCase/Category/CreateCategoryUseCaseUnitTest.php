@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\UseCase;
+namespace Unit\UseCase\Category;
 
 use Core\Domain\Entity\Category;
 use Core\Domain\Repository\ICategoryRepository;
